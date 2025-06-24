@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import { useOutletContext } from 'react-router-dom';
 import VideoCard from '../components/Videocard'
 import videos from '../data/dummyvideos'
 import Footer from '../components/Footer'
@@ -9,7 +10,15 @@ const Home=()=>{
 
 //   const changecount=  setCount=JSON.parse(sessionStorage.getItem('watchLater'))?.length || 0;
 
+const { watchLater, setWatchLater } = useOutletContext();
 
+  const handleWatchLater = (number) => {
+
+
+    if (!watchLater.includes(number)) {
+      setWatchLater(prev => [...prev, number]);
+    }
+  };
 
     
 
@@ -17,7 +26,7 @@ const Home=()=>{
 
 
 
-    const [watchLater, setWatchLater] = useState(() => JSON.parse(sessionStorage.getItem('watchLater')) || []);
+    // const [watchLater, setWatchLater] = useState(() => JSON.parse(sessionStorage.getItem('watchLater')) || []);
     const [likedVideos, setLikedVideos] = useState(() => JSON.parse(sessionStorage.getItem('likes')) || []);
 
   
@@ -26,11 +35,11 @@ const Home=()=>{
       sessionStorage.setItem('watchLater', JSON.stringify(watchLater));
     }, [likedVideos, watchLater]);
 
-const handleWatchLater=(number)=>{
-  setWatchLater((prev) => prev.includes(number) ? prev : [...prev, number]);
-//   setCount(JSON.parse(sessionStorage.getItem('watchLater'))?.length);
+// const handleWatchLater=(number)=>{
+//   setWatchLater((prev) => prev.includes(number) ? prev : [...prev, number]);
 
-}
+
+// }
 const handleLike = (number) => {
     setLikedVideos((prev) => prev.includes(number) ? prev.filter(x => x !== number) : [...prev, number]);
   };

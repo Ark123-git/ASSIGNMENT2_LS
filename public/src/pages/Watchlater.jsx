@@ -1,24 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import VideoCard from '../components/Videocard';
+import { useOutletContext } from 'react-router-dom';
 import videos  from '../data/dummyvideos';
 
-const WatchLater = () => {
-  const [watchLater, setWatchLater] = useState(() => JSON.parse(sessionStorage.getItem('watchLater')) || []);
+ const WatchLater = () => {
+  // const [watchLater, setWatchLater] = useState(() => JSON.parse(sessionStorage.getItem('watchLater')) || []);
 
-  useEffect(() => {
-    sessionStorage.setItem('watchLater', JSON.stringify(watchLater));
-  }, [watchLater]);
+  // useEffect(() => {
+  //   sessionStorage.setItem('watchLater', JSON.stringify(watchLater));
+  // }, [watchLater]);
 
-  const handleRemove = (number) => {
-    setWatchLater((prev) => prev.filter((vid) => vid !== number));
-  };
+  // const handleRemove = (number) => {
+  //   setWatchLater((prev) => prev.filter((vid) => vid !== number));
+  // };
+  const { watchLater, setWatchLater } = useOutletContext();
 
-  const savedVideos = videos.filter((vid) => watchLater.includes(vid.number));
+
+    const watchLaterVideos = videos.filter(video =>
+      watchLater.includes(video.number)
+    );
+  
+    const handleRemove = (number) => {
+      setWatchLater(prev => prev.filter(vid => vid !== number));
+    };
+
+  // const savedVideos = videos.filter((vid) => watchLater.includes(vid.number));
 
   return (
     <div className="d-flex flex-wrap justify-content-center">
-      {savedVideos.length === 0 ? <p>No videos saved to Watch Later.</p> :
-        savedVideos.map((video) => (
+      {watchLaterVideos.length === 0 ? <p>No videos saved to Watch Later.</p> :
+        watchLaterVideos.map((video) => (
           <VideoCard
             key={video.number}
             video={video}
