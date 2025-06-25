@@ -1,5 +1,5 @@
 import React from 'react';
-// { video, onLike, onWatchLater, onRemove, liked, inWatchLater }
+
 import '../styles.css'
 const VideoCard = (props) => {
   return (

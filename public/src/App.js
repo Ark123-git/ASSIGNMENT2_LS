@@ -7,15 +7,18 @@ import './styles.css';
 
 
 function App() {
-
+  const [likedVideos, setLikedVideos] = useState(() => JSON.parse(sessionStorage.getItem('likes')) || []);
   const [watchLater, setWatchLater] = useState(() =>
     JSON.parse(sessionStorage.getItem('watchLater')) || []
   );
 
+  // useEffect(() => {
+  //   sessionStorage.setItem('watchLater', JSON.stringify(watchLater));
+  // }, [watchLater]);
   useEffect(() => {
+    sessionStorage.setItem('likes', JSON.stringify(likedVideos));
     sessionStorage.setItem('watchLater', JSON.stringify(watchLater));
-  }, [watchLater]);
-
+  }, [likedVideos, watchLater]);
 
 
 
@@ -23,7 +26,7 @@ function App() {
    <>
    <Navbar watchcount={watchLater.length}/>
   
-   <Outlet context={{watchLater,setWatchLater}}/>
+   <Outlet context={{watchLater,setWatchLater,likedVideos,setLikedVideos}}/>
    
  
    </> 

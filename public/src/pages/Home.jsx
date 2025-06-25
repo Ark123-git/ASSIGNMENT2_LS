@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React from 'react'
 import { useOutletContext } from 'react-router-dom';
 import VideoCard from '../components/Videocard'
 import videos from '../data/dummyvideos'
@@ -6,11 +6,9 @@ import Footer from '../components/Footer'
 
 
 const Home=()=>{
-//     const [count,setCount]=useState(0)
 
-//   const changecount=  setCount=JSON.parse(sessionStorage.getItem('watchLater'))?.length || 0;
 
-const { watchLater, setWatchLater } = useOutletContext();
+const { watchLater, setWatchLater,likedVideos,setLikedVideos } = useOutletContext();
 
   const handleWatchLater = (number) => {
 
@@ -26,20 +24,18 @@ const { watchLater, setWatchLater } = useOutletContext();
 
 
 
-    // const [watchLater, setWatchLater] = useState(() => JSON.parse(sessionStorage.getItem('watchLater')) || []);
-    const [likedVideos, setLikedVideos] = useState(() => JSON.parse(sessionStorage.getItem('likes')) || []);
+    // const [likedVideos, setLikedVideos] = useState(() => JSON.parse(sessionStorage.getItem('likes')) || []);
 
   
-    useEffect(() => {
-      sessionStorage.setItem('likes', JSON.stringify(likedVideos));
-      sessionStorage.setItem('watchLater', JSON.stringify(watchLater));
-    }, [likedVideos, watchLater]);
-
-// const handleWatchLater=(number)=>{
-//   setWatchLater((prev) => prev.includes(number) ? prev : [...prev, number]);
+    // useEffect(() => {
+    //   sessionStorage.setItem('likes', JSON.stringify(likedVideos));
+    //   sessionStorage.setItem('watchLater', JSON.stringify(watchLater));
+    // }, [likedVideos, watchLater]);
 
 
-// }
+
+
+
 const handleLike = (number) => {
     setLikedVideos((prev) => prev.includes(number) ? prev.filter(x => x !== number) : [...prev, number]);
   };
@@ -57,10 +53,10 @@ const handleLike = (number) => {
           onWatchLater={handleWatchLater}
           liked={likedVideos.includes(video.number)}
           inWatchLater={watchLater.includes(video.number)}
-        // altercount={changecount}
+   
        
         />
-        // 
+     
       ))}
     </div>
     <Footer/>
